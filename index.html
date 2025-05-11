@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hoshi Learning</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #1e3a8a;
+    }
+
+    .card {
+      margin: 1rem 0;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #374ea2;
+    }
+
+    .result {
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Hoshi Learning</h1>
+  <p>Learn Japanese Alphabet & Numbers (Romaji Only)</p>
+</header>
+
+<div class="container">
+
+  <h2>Hiragana Flashcard Quiz</h2>
+  <div class="card" id="flashcard-container">
+    <p><strong>Question:</strong> What is the romaji for <span id="kana-question">あ</span>?</p>
+    <input type="text" id="flashcard-input" placeholder="Type the Romaji (e.g., a, i, u)...">
+    <button onclick="checkKana()">Submit</button>
+    <div id="flashcard-result" class="result"></div>
+  </div>
+
+  <h2>Fill-in-the-Blank: Numbers 1–10</h2>
+  <div class="card" id="number-container">
+    <p><span id="number-question">_____ is the Japanese word for 1.</span></p>
+    <input type="text" id="fill-input" placeholder="Type in Romaji (e.g., ichi)...">
+    <button onclick="checkNumber()">Submit</button>
+    <div id="fill-result" class="result"></div>
+  </div>
+
+</div>
+
+<script>
+  // Hiragana flashcards (Romaji)
+  const kanaFlashcards = [
+    { romaji: "a", kana: "あ" },
+    { romaji: "i", kana: "い" },
+    { romaji: "u", kana: "う" },
+    { romaji: "e", kana: "え" },
+    { romaji: "o", kana: "お" },
+  ];
+
+  let currentKana = 0;
+
+  function checkKana() {
+    const input = document.getElementById('flashcard-input').value.trim().toLowerCase();
+    const result = document.getElementById('flashcard-result');
+    const correct = kanaFlashcards[currentKana].romaji;
+
+    if (input === correct) {
+      result.textContent = `Correct! '${correct}' is the Romaji for ${kanaFlashcards[currentKana].kana}.`;
+      result.style.color = "green";
+      currentKana = (currentKana + 1) % kanaFlashcards.length;
+      document.getElementById('kana-question').textContent = kanaFlashcards[currentKana].kana;
+      document.getElementById('flashcard-input').value = "";
+    } else {
+      result.textContent = "Incorrect. Try again!";
+      result.style.color = "red";
+    }
+  }
+
+  // Numbers 1-10 (Romaji)
+  const numbers = [
+    { num: "1", romaji: "ichi" },
+    { num: "2", romaji: "ni" },
+    { num: "3", romaji: "san" },
+    { num: "4", romaji: "yon" },
+    { num: "5", romaji: "go" },
+    { num: "6", romaji: "roku" },
+    { num: "7", romaji: "nana" },
+    { num: "8", romaji: "hachi" },
+    { num: "9", romaji: "kyuu" },
+    { num: "10", romaji: "juu" },
+  ];
+
+  let currentNum = 0;
+
+  function checkNumber() {
+    const input = document.getElementById('fill-input').value.trim().toLowerCase();
+    const result = document.getElementById('fill-result');
+    const correct = numbers[currentNum].romaji;
+
+    if (input === correct) {
+      result.textContent = `Correct! '${correct}' means ${numbers[currentNum].num}.`;
+      result.style.color = "green";
+      currentNum = (currentNum + 1) % numbers.length;
+      document.getElementById('number-question').textContent = `_____ is the Japanese word for ${numbers[currentNum].num}.`;
+      document.getElementById('fill-input').value = "";
+    } else {
+      result.textContent = "Not quite. Try again!";
+      result.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>
